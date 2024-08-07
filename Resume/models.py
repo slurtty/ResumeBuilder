@@ -1,10 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-
+from django.contrib.auth.models import AbstractUser, User
 
 
 class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profiles')
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -17,7 +16,7 @@ class Profile(models.Model):
 
 
 class Experience(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='experience')
     job_title = models.CharField(max_length=100)
     company_name = models.CharField(max_length=250)
     description = models.TextField(blank=True, null=True)
@@ -31,7 +30,7 @@ class Experience(models.Model):
 
 
 class Education(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='educations')
     institution_name = models.CharField(max_length=250)
     description = models.TextField(blank=True, null=True)
 
@@ -54,7 +53,7 @@ class Skill(models.Model):
         ('10', '10'),
     ]
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='skills')
     name = models.CharField(max_length=100)
     rate = models.CharField(max_length=5, choices=RATE_CHOICES, default=1)
 
@@ -72,7 +71,7 @@ class Language(models.Model):
         ('c2', 'C2'),
     ]
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='languages')
     name = models.CharField(max_length=100)
     level = models.CharField(max_length=5, choices=LEVEL_CHOICES, default='a1')
 
