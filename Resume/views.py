@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-from msilib.schema import ListView
 from Resume import models
 from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
