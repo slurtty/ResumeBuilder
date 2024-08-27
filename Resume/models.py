@@ -33,6 +33,10 @@ class Education(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='educations')
     institution_name = models.CharField(max_length=250)
     description = models.TextField(blank=True, null=True)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+    still_studying = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.institution_name
