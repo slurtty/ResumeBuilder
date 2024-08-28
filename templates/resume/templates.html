@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Виберіть шаблон</h2>
+
+    {% for template in templates %}
+    <div class="card" style="max-width: 38rem;">
+        <img src="{{ template.image.url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ template.name}}</h5>
+
+            <a href="#" class="btn btn-info">Вибрати шаблон</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
