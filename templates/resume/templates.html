@@ -10,7 +10,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ template.name}}</h5>
 
-            <a href="#" class="btn btn-info">Вибрати шаблон</a>
+            <a href="{% url 'resume-view' profile.id template.id %}" class="btn btn-info">Вибрати шаблон</a>
         </div>
     </div>
     {% endfor %}

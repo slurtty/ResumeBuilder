@@ -26,8 +26,8 @@ class BaseCreateView(LoginRequiredMixin, CreateView):
 
 class ProfileListView(LoginRequiredMixin, ListView):
     model = models.Profile
-    context_object_name = 'profile'
-    template_name = 'resume/profile.html'
+    context_object_name = 'profiles'
+    template_name = 'resume/my_profiles.html'
 
     def get_queryset(self):
         queryset = super(ProfileListView, self).get_queryset()
@@ -89,14 +89,24 @@ class TemplatesListView(LoginRequiredMixin, ListView):
     template_name = "Resume/templates.html"
     context_object_name = "templates"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = get_object_or_404(models.Profile, id=self.kwargs.get('profile_id'))
+        return context
+
 
 class ResumeDetailView(LoginRequiredMixin, DetailView):
     model = models.ResumeTemplate
-    template_name = "Resume/templates.html"
     context_object_name = 'template'
 
-    def get_template_name(self):
+    def get_template_names(self):
+        template = get_object_or_404(models.ResumeTemplate, pk=self.kwargs['pk'])
+        return ['Resume/' + template.template]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = get_object_or_404(models.Profile, id=self.kwargs.get('profile_id'))
+        return context
 
 
 

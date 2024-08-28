@@ -12,5 +12,6 @@ urlpatterns = [
     path('profile/<int:profile_id>/skills/create', views.SkillCreateView.as_view(), name='skills-create'),
     path('profile/<int:profile_id>/language/create', views.LanguageCreateView.as_view(), name='language-create'),
     path('profile/<int:profile_id>/templates/list', views.TemplatesListView.as_view(), name='templates-list'),
+    path('profile/<int:profile_id>/templates/<int:pk>', views.ResumeDetailView.as_view(), name='resume-view'),
 ]
 

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Ваші резюме</h2>
+    <a class="button1" href="{% url 'profile-create' %}">Створити резюме</a>
+    <div class="row mt-3 row-cols-1 row-cols-md-4 row-cols-lg-6 g-4">
+        {% for profile in profiles %}
+        <div class="col">
+            <div class="card" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ profile.first_name}} - {{ profile.last_name }}</h5>
+                    <a href="{% url 'templates-list' profile.pk %}" class="btn btn-info">Переглянути</a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

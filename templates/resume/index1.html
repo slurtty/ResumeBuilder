@@ -5,57 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Резюме</title>
-    <link rel="stylesheet" href="style1.css">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 </head>
 
 <body>
 
-    <div class="container">
-        <h1> {{profile.first_name}} {{profile.last_name}} </h1>
-        <div class="contact-info">
-            <p><strong>Email:</strong> {{profile.email}} </p>
-            <p><strong>Телефон:</strong> {{ profile.phone }} </p>
-            <p><strong>Адреса:</strong>  {{ profile.address }} </p>
-            <p><strong>Вебсайт:</strong> <a href="" target="_blank"> {{ profile.site }} </a></p>
-        </div>
 
+
+<div class="container" id="resume">
+    <h1> {{profile.first_name}} {{profile.last_name}} </h1>
         <div class="section">
             <h2>Профіль</h2>
         </div>
+    <div class="contact-info">
+        <p><strong>Email:</strong> {{profile.email}} </p>
+        <p><strong>Телефон:</strong> {{ profile.phone }} </p>
+        <p><strong>Адреса:</strong> {{ profile.address }} </p>
+        {% if profile.site %}
+        <p><strong>Вебсайт:</strong> <a href="" target="_blank"> {{ profile.site }} </a></p>
+        {% endif %}
 
-        <div class="section">
-            <h2>Досвід роботи</h2>
-            {% for ex in profile.experience.all %}
-            <p><strong> {{ex.job_title}} </strong>{{ex.company_name}}</p>
-            <p> {{ex.start_date}}  - {{ex.end_date}} {{ex.still_work}} </p>
-            <p> {{ex.description}} </p>
-            {% endfor %}
-        </div>
-        <div class="section">
-            <h2>Освіта</h2>
-            {% for ex in profile.educations.all %}
-
-            <p><strong> {{ex.institution_name}} </strong></p>
-            <p> {{ex.start_date}}  - {{ex.end_date}} {{ex.still_studying}} </p>
-            <p> {{ex.description}} </p>
-            {% endfor %}
-        </div>
-
-        <div class="section">
-            {% for ex in profile.skills.all %}
-            <h2>Навички</h2>
-            <p><strong> {{ex.name}} :</strong> {{ex.rate}} </p>
-            {% endfor %}
-        </div>
-
-        <div class="section">
-            {% for ex in profile.language.all %}
-            <h2>Навички</h2>
-            <p><strong> {{ex.name}} :</strong> {{ex.level}} </p>
-            {% endfor %}
-        </div>
     </div>
 
+
+    <div class="section">
+        <h2>Досвід роботи</h2>
+        {% for ex in profile.experience.all %}
+        <p><strong> Посада </strong>{{ex.job_title}}</p>
+        <p><strong> Назва компанії </strong>{{ex.company_name}}</p>
+
+        <p> {{ex.start_date}} - {{ex.end_date}} {{ex.still_work}} </p>
+        <p> {{ex.description}} </p>
+        {% endfor %}
+    </div>
+    <div class="section">
+        <h2>Освіта</h2>
+        {% for ex in profile.educations.all %}
+
+        <p><strong> {{ex.institution_name}} </strong></p>
+        <p> {{ex.start_date}} - {{ex.end_date}} {{ex.still_studying}} </p>
+        <p> {{ex.description}} </p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        {% for ex in profile.skills.all %}
+        <h2>Навички</h2>
+        <p><strong> {{ex.name}} :</strong> {{ex.rate}} </p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        {% for ex in profile.languages.all %}
+        <h2>Мови</h2>
+        <p><strong> {{ex.name}} :</strong> {{ex.level}} </p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container">
+    <button class="button1" id="save">Зберегти у PDF</button>
+</div>
+
+        <script>
+			const button = document.getElementById('save');
+
+			function generatePDF() {
+			window.print()
+			}
+
+			button.addEventListener('click', generatePDF);
+		</script>
 </body>
 
 </html>
