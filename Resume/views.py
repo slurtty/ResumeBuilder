@@ -9,6 +9,21 @@ from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+class BaseCreateView(LoginRequiredMixin, CreateView):
+    model = models.Education
+    template_name = 'Resume/education.html'
+    form_class = forms.EducationForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = get_object_or_404(models.Profile, id=self.kwargs.get('profile_id'))
+        return context
+
+    def form_valid(self, form):
+        form.instance.profile = get_object_or_404(models.Profile, id=self.kwargs.get('profile_id'))
+        return super().form_valid(form)
+
+
 class ProfileListView(LoginRequiredMixin, ListView):
     model = models.Profile
     context_object_name = 'profile'
@@ -33,19 +48,58 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('education-create', kwargs={'profile_id': self.object.pk})
 
 
-class EducationCreateView(LoginRequiredMixin, CreateView):
+class EducationCreateView(BaseCreateView):
     model = models.Education
     template_name = 'Resume/education.html'
     form_class = forms.EducationForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['profile'] = get_object_or_404(models.Profile, id=self.kwargs.get('profile_id'))
-        return context
-
-    def form_valid(self, form):
-        form.instance.profile = get_object_or_404(models.Profile, id=self.kwargs.get('profile_id'))
-        return super().form_valid(form)
-
     def get_success_url(self):
         return reverse_lazy('education-create', kwargs={'profile_id': self.kwargs.get('profile_id')})
+
+
+class ExperienceCreateView(BaseCreateView):
+    model = models.Experience
+    template_name = 'Resume/experience.html'
+    form_class = forms.ExperienceForm
+
+    def get_success_url(self):
+        return reverse_lazy('experience-create', kwargs={'profile_id': self.kwargs.get('profile_id')})
+
+
+class SkillCreateView(BaseCreateView):
+    model = models.Skill
+    template_name = 'Resume/skills.html'
+    form_class = forms.SkillForm
+
+    def get_success_url(self):
+        return reverse_lazy('skills-create', kwargs={'profile_id': self.kwargs.get('profile_id')})
+
+
+class LanguageCreateView(BaseCreateView):
+    model = models.Language
+    template_name = 'Resume/language.html'
+    form_class = forms.LanguageForm
+
+    def get_success_url(self):
+        return reverse_lazy('language-create', kwargs={'profile_id': self.kwargs.get('profile_id')})
+
+
+class TemplatesListView(LoginRequiredMixin, ListView):
+    model = models.ResumeTemplate
+    template_name = "Resume/templates.html"
+    context_object_name = "templates"
+
+
+class ResumeDetailView(LoginRequiredMixin, DetailView):
+    model = models.ResumeTemplate
+    template_name = "Resume/templates.html"
+    context_object_name = 'template'
+
+    def get_template_name(self):
+
+
+
+
+
+
+

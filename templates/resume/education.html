@@ -23,7 +23,7 @@
         {% csrf_token %}
         {{ form.as_div }}
         <button type="submit">Зберегти</button>
-        <a href="{% url 'education-create' profile.pk %}" class="button1">Далі</a>
+        <a href="{% url 'experience-create' profile.pk %}" class="button1">Далі</a>
 
     </form>
 

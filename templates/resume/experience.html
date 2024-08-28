@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Досвід роботи</h2>
+
+    <ol class="list-group list-group-numbered">
+
+        {% for ex in profile.experience.all %}
+
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{ ex.job_title }}</div>
+                <div class="fw-bold">{{ ex.company_name }}</div>
+                <div>{{ ex.start_date }} - {{ end_date }}</div>
+                <div>{{  description  }}</div>
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit">Зберегти</button>
+        <a href="{% url 'skills-create' profile.pk %}" class="button1">Далі</a>
+
+    </form>
+
+
+
+</div>
+
+
+
+{% endblock %}
