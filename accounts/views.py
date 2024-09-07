@@ -14,8 +14,10 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
     form_class = UserLoginForm
 
+
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('accounts:login')
+
 
 class RegisterView(CreateView):
     template_name = 'accounts/register.html'

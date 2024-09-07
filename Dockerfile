@@ -20,3 +20,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 ENTRYPOINT [ "gunicorn", "Resume_Builder.wsgi", "-b", "0.0.0.0:8000"]
+
